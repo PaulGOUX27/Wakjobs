@@ -1,3 +1,5 @@
+var hasardCraft = false
+
 function xpLevel(level) {
   return 75 + 150 * level
 }
@@ -7,9 +9,10 @@ function xpNiveauTotal(niveau) {
 }
 
 function updateCoefficientCraft(niv) {
-  if (niv <= 9 && niv > 0)
-    return 1 + niv / 10
-  else if (niv >= -10 && niv <= 0)
+  if (niv <= 9 && niv > 0) {
+	hasardCraft = true
+	return 1 + niv / 10
+  } else if (niv >= -10 && niv <= 0)
     return 1
   else
     switch (niv) {
@@ -47,13 +50,14 @@ function xpByCraft(currentLevel, recipeLevel, baseXpRecipe, percentage, booster,
 }
 
 function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, percentage, booster, weekend) {
+	hasardCraft = false
 	let nbCraft = 0;
 	let currentLevel = nivDepart
 	let currentExperience = xpDepart
 	
 	gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
 
-	do {
+	while (currentLevel < nivArrive) {
 		nbCraft++;
 		currentExperience += gainedExperience;
 		while (currentExperience >= xpLevel(currentLevel)) {
@@ -61,17 +65,18 @@ function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, 
 			currentExperience -= xpLevel(currentLevel - 1)
 		}
 		gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
-	} while (currentLevel < nivArrive)
-	return nbCraft
+	}
+	return { "nbCraft": nbCraft, "hasardCraft" : hasardCraft }
 }
 
 function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, percentage, booster, weekend) {
+	hasardCraft = false
 	let currentLevel = nivDepart
 	let currentExperience = xpDepart
 	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 	let craftDone = 0
 	gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
-	do {
+	while (craftDone < nbCraft) {
 		craftDone++;
 		currentExperience += gainedExperience;
 		while (currentExperience >= xpLevel(currentLevel)) {
@@ -79,7 +84,6 @@ function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, pe
 			currentExperience -= xpLevel(currentLevel - 1)
 		}
 		gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
-	} while (craftDone < nbCraft)
-	console.log(currentLevel, currentExperience)
-	return {"level": currentLevel, "experience": currentExperience}
+	}
+	return {"level": currentLevel, "experience": currentExperience, "hasardCraft" : hasardCraft }
 }
