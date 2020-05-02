@@ -32,14 +32,34 @@ function updateCoefficientCraft(niv) {
       case -19:
         return 0.024
       default:
-      	throw "Level difference too great"
+      	throw "Difference in level too great"
     }
 
 }
 
 function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, percentage, booster) {
-	let nbCraft = 0;
+	let nbCraft = 0
 	let currentLevel = nivDepart
+	let currentExperience = xpDepart
+	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
+	if (booster)
+		recipeExperience *= 1.5
+	let gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)));
+	do {
+		nbCraft++;
+		currentExperience += gainedExperience;
+		while (currentExperience >= xpLevel(currentLevel)) {
+			currentLevel += 1
+			currentExperience -= xpLevel(currentLevel - 1)
+		}
+		coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
+		gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)))
+	} while (currentLevel < nivArrive)
+	return nbCraft
+}
+
+function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, percentage, booster) {
+	let nivArrive = nivDepart
 	let currentExperience = xpDepart
 	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 	if (booster)
