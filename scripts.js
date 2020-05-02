@@ -59,7 +59,7 @@ function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, 
 }
 
 function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, percentage, booster) {
-	let nivArrive = nivDepart
+	let currentNiv = nivDepart
 	let currentExperience = xpDepart
 	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 	if (booster)
@@ -74,6 +74,6 @@ function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, pe
 		}
 		coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 		gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)))
-	} while (currentLevel < nivArrive)
+	} while (currentLevel < currentNiv)
 	return nbCraft
 }
