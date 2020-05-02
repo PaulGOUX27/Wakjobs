@@ -32,7 +32,7 @@ function updateCoefficientCraft(niv) {
       case -19:
         return 0.024
       default:
-      	throw "Ecart de niveau trop important"
+      	throw "Level difference too great"
     }
 
 }

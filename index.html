@@ -9,8 +9,7 @@
 </head>
 <body>
 
-	<div>
-
+	<div id="calculator">
 		<label for="startLvl" >Start level :</label>
 		<input type="number" id="startLvl" min="1" max="200" onchange="calculate()" value="1" required="">
 		<br/>
@@ -44,6 +43,32 @@
 		
 		<label for="result">Quantity to craft :</label>
 		<span id="result"></span>
+	</div>
+	<div>
+		<h3>Recipe experience</h3>
+		In the <i>Recipe experience</i> fields, you need to enter the base experience given by the craft, without any bonus or malus.<br/>
+		Here, a part a the list :
+		<div>
+			Component : 300
+		</div>
+		<div>
+			Rare craft : 2 400
+		</div>
+		<div>
+			Mythical craft : 7200
+		</div>
+		<div>
+			Souvenir craft : 10 800
+		</div>
+		<div>
+			Rare upgrade : 1 200
+		</div>
+		<div>
+			Mythical upgrade : 3600
+		</div>
+		<div>
+			Legendary upgrade : 10 800
+		</div>
 	</div>
 
 	<script>
