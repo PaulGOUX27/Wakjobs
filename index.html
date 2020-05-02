@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WakJobs</title>
+  <script src="scripts.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+
+	<div>
+
+		<label for="startLvl" >Start level :</label>
+		<input type="number" id="startLvl" min="1" max="200" onchange="calculate()" value="1" required="">
+		<br/>
+
+		<label for="endLvl">Level to reach :</label>
+		<input type="number" id="endLvl" min="1" max="200" onchange="calculate()" value="1" required="">
+		<br/>
+
+		<label for="startXp">Start experience :</label>
+		<input type="number" id="startXp" min="0" onchange="calculate()" value="0" required="">
+		<br/>
+
+		<label for="recipeLvl">Recipe level :</label>
+		<input type="number" id="recipeLvl" min="1" max="200" onchange="calculate()" value="1" required="">
+		<br/>
+
+		<label for="recipeXp">Recipe experience :</label>
+		<input type="number" id="recipeXp" min="1" onchange="calculate()" value="1" required="">
+		<br/>
+
+		<label for="percentage">Percentage bonus :</label>
+		<input type="number" id="percentage" min="0" onchange="calculate()" value="0" required="">
+		<br/>
+
+		<label for="booster">Booster Pack :</label>
+		<input type="checkbox" id="booster" onchange="calculate()">
+		<br/>
+
+		<button type="button" onclick="calculate()">Calculate !</button>
+		<br/>
+		
+		<label for="result">Quantity to craft :</label>
+		<span id="result"></span>
+	</div>
+
+	<script>
+		function calculate() {
+			let result
+			try {
+				result = nbCraft(Number($('#startLvl').val()), Number($('#endLvl').val()), Number($('#startXp').val()), Number($('#recipeLvl').val()), Number($('#recipeXp').val()), Number($('#percentage').val()), $('#booster').is(':checked'))
+			} catch (ex) {
+				result = ex
+			}
+			$('#result').text(result)
+		}
+	</script>
+
+</body>
+</html>
