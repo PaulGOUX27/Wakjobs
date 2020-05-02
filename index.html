@@ -38,6 +38,10 @@
 		<input type="checkbox" id="booster" onchange="calculate()">
 		<br/>
 
+		<label for="weekend">100% Bonus weekend :</label>
+		<input type="checkbox" id="weekend" onchange="calculate()">
+		<br/>
+
 		<button type="button" onclick="calculate()">Calculate !</button>
 		<br/>
 		
@@ -75,7 +79,7 @@
 		function calculate() {
 			let result
 			try {
-				result = nbCraft(Number($('#startLvl').val()), Number($('#endLvl').val()), Number($('#startXp').val()), Number($('#recipeLvl').val()), Number($('#recipeXp').val()), Number($('#percentage').val()), $('#booster').is(':checked'))
+				result = nbCraft(Number($('#startLvl').val()), Number($('#endLvl').val()), Number($('#startXp').val()), Number($('#recipeLvl').val()), Number($('#recipeXp').val()), Number($('#percentage').val()), $('#booster').is(':checked'), $('#weekend').is(':checked'))
 			} catch (ex) {
 				result = ex
 			}

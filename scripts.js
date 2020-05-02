@@ -34,17 +34,22 @@ function updateCoefficientCraft(niv) {
       default:
       	throw "Difference in level too great"
     }
-
 }
 
-function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, percentage, booster) {
-	let nbCraft = 0
+function xpByCraft(jobLevel, recipeLevel, baseXpRecipe, booster, weekend){
+	
+}
+
+function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, percentage, booster, weekend) {
+	let nbCraft = 0;
 	let currentLevel = nivDepart
 	let currentExperience = xpDepart
 	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 	if (booster)
 		recipeExperience *= 1.5
-	let gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)));
+	let gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)))
+	if (weekend)
+		gainedExperience *=2
 	do {
 		nbCraft++;
 		currentExperience += gainedExperience;
@@ -58,15 +63,18 @@ function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, 
 	return nbCraft
 }
 
-function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, percentage, booster) {
-	let currentNiv = nivDepart
+function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, percentage, booster, weekend) {
+	let currentLevel = nivDepart
 	let currentExperience = xpDepart
 	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
+	let craftDone = 0
 	if (booster)
 		recipeExperience *= 1.5
-	let gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)));
+	let gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)))
+	if (weekend)
+		gainedExperience *=2
 	do {
-		nbCraft++;
+		craftDone++;
 		currentExperience += gainedExperience;
 		while (currentExperience >= xpLevel(currentLevel)) {
 			currentLevel += 1
@@ -74,6 +82,8 @@ function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, pe
 		}
 		coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 		gainedExperience = (recipeExperience * coefficientCraft * (1 + (percentage / 100)))
-	} while (currentLevel < currentNiv)
+	} while (craftDone < nbCraft)
+	console.log(craftDone, nbCraft)
+	console.log(currentLevel, currentExperience)
 	return nbCraft
 }
