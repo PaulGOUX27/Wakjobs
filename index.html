@@ -100,33 +100,136 @@
 		</div>
 	</div>
 	<hr/>
-		<div >
-				<h3>Recipe experience</h3>
-				In the <i>Recipe experience</i> fields, you need to enter the base experience given by the craft, without any bonus or malus.<br/>
-				Here, a part a the list :
-				<div>
-					Component : 300
-				</div>
-				<div>
-					Rare craft : 2 400
-				</div>
-				<div>
-					Mythical craft : 7200
-				</div>
-				<div>
-					Souvenir craft : 10 800
-				</div>
-				<div>
-					Rare upgrade : 1 200
-				</div>
-				<div>
-					Mythical upgrade : 3600
-				</div>
-				<div>
-					Legendary upgrade : 10 800
-				</div>
-			</div>
+	<div >
+		<h3>Recipe experience</h3>
+		In the <i>Recipe experience</i> fields, you need to enter the base experience given by the craft, without any bonus or malus.<br/>
+		Here, a part a the list :
+		<div>
+			Component : 300
+		</div>
+		<div>
+			Rare craft : 2 400
+		</div>
+		<div>
+			Mythical craft : 7200
+		</div>
+		<div>
+			Souvenir craft : 10 800
+		</div>
+		<div>
+			Rare upgrade : 1 200
+		</div>
+		<div>
+			Mythical upgrade : 3600
+		</div>
+		<div>
+			Legendary upgrade : 10 800
+		</div>
+	</div>
+	<label for="itemSearch">Item Search</label>
+	<input type="text" id="itemSearch" onchange="searchItem()">
+	<div id="itemList">
+
+	</div>
 	<script>
+		var recipes = formatData(downloadJSON('recipes'), downloadJSON('items'), downloadJSON('recipeResults'))
+
+		function downloadJSON(JSONName, async = false){
+			toReturn = []
+			jQuery.ajax({
+		        url: 'https://wakfu.cdn.ankama.com/gamedata/1.67.2.178303/'+ JSONName + '.json',
+		        //headers: {'Access-Control-Allow-Origin' : '*'},
+		        success: function (result) {
+		        	toReturn = result
+		        },
+		        async: async
+    		});
+    		return toReturn;
+		}
+
+		function formatData(recipes, items, recipeResults){
+			let recipesReturned = []
+			recipeResults.forEach(function(recipeResult){
+				recipe = recipes.find(function(recipe){
+		    		return recipeResult.recipeId === recipe.id
+		    	})
+
+		    	item = items.find(function(item){
+		    		return recipeResult.productedItemId === item.definition.item.id
+		    	})
+		    	if (item !== undefined){
+			    	let rarity = ''
+			    	switch(item.definition.item.baseParameters.rarity){
+			    		case 0:
+			    			rarity = "commun"
+			    			break
+			    		case 1:
+			    			rarity = "unusual"
+			    			break
+			    		case 2:
+			    			rarity = "rare"
+			    			break
+			    		case 3:
+			    			rarity = "mythical"
+			    			break
+			    		case 4:
+			    			rarity = "legendary"
+			    			break
+			    		case 5:
+			    			rarity = "relique"
+			    			break
+			    		case 6:
+			    			rarity = "souvenir"
+			    			break
+			    		case 7:
+			    			rarity = "epique"
+			    			break
+			    	}
+		    	
+					recipeToAdd = {
+						recipe : {
+							'xpRatio' : recipe.xpRatio,
+							'level' : recipe.level,
+							'id' : recipe.id,
+						},
+						item : {
+							'id' : item.definition.item.id,
+							'title' : item.title,
+							'rarity' : rarity,
+							'title' : item.title,
+							'imageId' : item.definition.item.graphicParameters.gfxId
+						}
+					}
+
+					recipesReturned.push(recipeToAdd)
+				}
+			})
+			return recipesReturned
+		}
+
+		function searchItem() {
+			$('#itemList').empty()
+			$.each(recipes.filter(function(recipe) {
+				return recipe.item.title.fr.includes($('#itemSearch').val())
+			}), function(index, recipe){
+				createDivForItem(recipe).appendTo('#itemList')
+			})
+		}
+
+		function createDivForItem(recipe){
+			container = $('<div/>', {
+				id: "item" + recipe.item.id,
+				class: 'item'
+			})
+			$('<img/>', {
+				src: 'https://static.ankama.com/wakfu/portal/game/item/42/' + recipe.item.imageId + '.png'
+			}).appendTo(container)
+			$('<div/>', {
+				'text': recipe.item.title.fr + recipe.recipe.xpRatio
+			}).appendTo(container)
+			return container
+		}
+
 		function calculate() {
 			let result
 			try {
