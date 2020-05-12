@@ -1,0 +1,56 @@
+footer {
+	text-align: center;
+	margin-top: 50px
+}
+
+.commun img {
+	border-color: #979797;
+	border-style: solid}
+
+.unusual img {
+	border-color: #d1d1d1;
+	border-style: solid
+}
+
+.rare img {
+	border-color: #00e473;
+	border-style: solid
+}
+
+.mythical img {
+	border-color: #ff7803;
+	border-style: solid
+}
+
+.legendary img {
+	border-color: #ffcb01;
+	border-style: solid
+}
+
+.relique img {
+	border-color: #ea3fb9;
+	border-style: solid
+}
+
+.souvenir img {
+	border-color: #70c4dd;
+	border-style: solid
+}
+
+.epique img {
+	border-color: #f271a6;
+	border-style: solid
+}
+
+.item {
+	transition: .2s;
+	margin: 0 auto;
+	white-space: nowrap;
+}
+.item:hover {
+	background-color: gray;
+	transform: scale(1.01);
+} 
+.itemList {
+	width: 400px
+}
