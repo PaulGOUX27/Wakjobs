@@ -18,35 +18,35 @@
 			<div id="calculator" class="col-sm">
 				<div id="inputs">
 					<label for="startLvl">Start level :</label>
-					<input type="number" id="startLvl" min="1" max="200" onchange="calculate()" value="1" required="">
+					<input type="number" id="startLvl" min="1" max="200" value="1" required="">
 					<br/>
 
 					<label for="endLvl">Level to reach :</label>
-					<input type="number" id="endLvl" min="1" max="200" onchange="calculate()" value="1" required="">
+					<input type="number" id="endLvl" min="1" max="200" value="1" required="">
 					<br/>
 
 					<label for="startXp">Start experience :</label>
-					<input type="number" id="startXp" min="0" onchange="calculate()" value="0" required="">
+					<input type="number" id="startXp" min="0" value="0" required="">
 					<br/>
-		<!--
+		
 					<label for="recipeLvl">Recipe level :</label>
-					<input type="number" id="recipeLvl" min="1" max="200" onchange="calculate()" value="1" required="">
+					<input type="number" id="recipeLvl" min="1" max="200" value="1" required="">
 					<br/>
 
 					<label for="recipeXp">Recipe experience :</label>
-					<input type="number" id="recipeXp" min="1" onchange="calculate()" value="1" required="">
+					<input type="number" id="recipeXp" min="1" value="1" required="">
 					<br/>
-		-->
+		
 					<label for="percentage">Percentage bonus :</label>
-					<input type="number" id="percentage" min="0" onchange="calculate()" value="0" required="">
+					<input type="number" id="percentage" min="0" value="0" required="">
 					<br/>
 
 					<label for="booster">Booster Pack :</label>
-					<input type="checkbox" id="booster" onchange="calculate()">
+					<input type="checkbox" id="booster">
 					<br/>
 
 					<label for="weekend">100% Bonus weekend :</label>
-					<input type="checkbox" id="weekend" onchange="calculate()">
+					<input type="checkbox" id="weekend">
 					<br/>
 
 					<button type="button" onclick="calculate()">Calculate !</button>
@@ -61,35 +61,35 @@
 			<div id="reverseCalculator" class="col-sm">
 				<div id="inputs">
 					<label for="reverseStartLvl">Start level :</label>
-					<input type="number" id="reverseStartLvl" min="1" max="200" onchange="reverseCalculate()" value="1" required="">
+					<input type="number" id="reverseStartLvl" min="1" max="200" value="1" required="">
 					<br/>
 
 					<label for="craftQuantity">Number of craft :</label>
-					<input type="number" id="craftQuantity" min="1" onchange="reverseCalculate()" value="1" required="">
+					<input type="number" id="craftQuantity" min="1" value="1" required="">
 					<br/>
 
 					<label for="reverseStartXp">Start experience :</label>
-					<input type="number" id="reverseStartXp" min="0" onchange="reverseCalculate()" value="0" required="">
+					<input type="number" id="reverseStartXp" min="0" value="0" required="">
 					<br/>
-		<!--
+		
 					<label for="reverseRecipeLvl">Recipe level :</label>
-					<input type="number" id="reverseRecipeLvl" min="1" max="200" onchange="reverseCalculate()" value="1" required="">
+					<input type="number" id="reverseRecipeLvl" min="1" max="200" value="1" required="">
 					<br/>
 
 					<label for="reverseRecipeXp">Recipe experience :</label>
-					<input type="number" id="reverseRecipeXp" min="1" onchange="reverseCalculate()" value="1" required="">
+					<input type="number" id="reverseRecipeXp" min="1" value="1" required="">
 					<br/>
-		-->
+		
 					<label for="reversePercentage">Percentage bonus :</label>
-					<input type="number" id="reversePercentage" min="0" onchange="reverseCalculate()" value="0" required="">
+					<input type="number" id="reversePercentage" min="0" value="0" required="">
 					<br/>
 
 					<label for="reverseBooster">Booster Pack :</label>
-					<input type="checkbox" id="reverseBooster" onchange="reverseCalculate()">
+					<input type="checkbox" id="reverseBooster">
 					<br/>
 
 					<label for="reverseWeekend">100% Bonus weekend :</label>
-					<input type="checkbox" id="reverseWeekend" onchange="reverseCalculate()">
+					<input type="checkbox" id="reverseWeekend">
 					<br/>
 
 					<button type="button" onclick="reverseCalculate()">Calculate !</button>
@@ -101,23 +101,13 @@
 					<span id="reverseHasardCraft" style="color: orange"></span>
 				</div>
 			</div>
-			<div id="divItemSearch" class="col-sm">
-				<div id="selectedItem">
-
-				</div>
-				<label for="itemSearch">Item Search</label>
-				<input type="text" id="itemSearch" onchange="searchItem()">
-				<div id="itemList" class="itemList">
-
-				</div>
-			</div>
 		</div>
 	</div>
 
 	<div hidden="">
 		<h3>Recipe experience</h3>
-		In the <i>Recipe experience</i> fields, you need to enter the base experience given by the craft, without any bonus or malus.<br/>
-		Here, a part a the list :
+		In the <i>Recipe experience</i> fields, you need to enter the base experience given by the craft, without any bonus or malusm including booster.<br/>
+		Here, a part of the list :
 		<div>
 			Component : 300
 		</div>
@@ -140,55 +130,16 @@
 			Legendary upgrade : 10 800
 		</div>
 	</div>
-
+	
+	<div class="centered">
+		<i>Recipe experience</i> can be found <a href="https://craftkfu.methodwakfu.com/">here</a>
+	</div>
 
 	<script>
-		var recipes = getformatedData()
-		var currentRecipe = undefined
-
-		function emptyListItem(){
-			$('#itemList').empty()
-		}
-
-		function setCurrentRecipe(item){
-			console.log("selectedItem : ", item)
-			currentRecipe = item
-			emptyListItem()
-			$('#selectedItem').empty()
-			createDivForItem(currentRecipe).appendTo($('#selectedItem'))
-			$('#itemSearch').val('')
-		}
-
-		function searchItem() {
-			$('#itemList').empty()
-			$.each(recipes.filter(function(recipe) {
-				// https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
-				return recipe.item.title.fr.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().includes($('#itemSearch').val().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())
-			}), function(index, recipe){
-				createDivForItem(recipe).appendTo('#itemList')
-				$('<br/>').appendTo('#itemList')
-			})
-		}
-
-		function createDivForItem(recipe){
-			container = $('<div/>', {
-				id: "item" + recipe.item.id,
-				class: ['item', recipe.item.rarity].join(" "),
-				click: function(){ setCurrentRecipe(recipe) }
-			})
-			$('<img/>', {
-				src: 'https://static.ankama.com/wakfu/portal/game/item/42/' + recipe.item.imageId + '.png'
-			}).appendTo(container)
-			$('<div/>', {
-				'text': recipe.item.title.fr
-			}).appendTo(container)
-			return container
-		}
-
 		function calculate() {
 			let result
 			try {
-				result = nbCraft(Number($('#startLvl').val()), Number($('#endLvl').val()), Number($('#startXp').val()), Number(currentRecipe.recipe.level), Number(currentRecipe.recipe.xpRatio) / 1.5, Number($('#percentage').val()), $('#booster').is(':checked'), $('#weekend').is(':checked'))
+				result = nbCraft(Number($('#startLvl').val()), Number($('#endLvl').val()), Number($('#startXp').val()), Number($('#recipeLvl').val()), Number($('#recipeXp').val()) / 1.5, Number($('#percentage').val()), $('#booster').is(':checked'), $('#weekend').is(':checked'))
 				if(result.hasardCraft)
 					$('#hasardCraft').text('This recipe is subject to the laws of randomness')
 				else
@@ -200,10 +151,10 @@
 			$('#resultCalculator').text(result.nbCraft)
 		}
 
-		function reverseCalculate() {
+		function reverseCalculate() {reverseRecipeXp
 			let result
 			try {
-				result = reverse(Number($('#reverseStartLvl').val()), Number($('#craftQuantity').val()), Number($('#reverseStartXp').val()), Number(currentRecipe.recipe.level), Number(currentRecipe.recipe.xpRatio) / 1.5, Number($('#reversePercentage').val()), $('#reverseBooster').is(':checked'), $('#reverseWeekend').is(':checked'))
+				result = reverse(Number($('#reverseStartLvl').val()), Number($('#craftQuantity').val()), Number($('#reverseStartXp').val()), Number($('#reverseRecipeLvl').val()), Number($('#reverseRecipeXp').val()) / 1.5, Number($('#reversePercentage').val()), $('#reverseBooster').is(':checked'), $('#reverseWeekend').is(':checked'))
 				if(result.hasardCraft)
 					$('#reverseHasardCraft').text('This recipe is subject to the laws of randomness')
 				else
@@ -219,8 +170,7 @@
 
 	<footer>
 		WAKFU is an MMORPG published by Ankama. This tool is unofficial and has no connection with Ankama.<br/>
-		For any feedback, suggestions, bugs or reuse, contact me on Discord : Khawkey#8543.<br/>
-		Version 1.3
+		Version 1.4
 	</footer>
 </body>
 </html>

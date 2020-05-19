@@ -3,6 +3,11 @@ footer {
 	margin-top: 50px
 }
 
+.centered {
+	text-align: center;
+	margin-top: 50px;
+}
+
 .commun img {
 	border-color: #979797;
 	border-style: solid}
@@ -53,4 +58,9 @@ footer {
 } 
 .itemList {
 	width: 400px
+}
+
+label {
+	width: 150px;
+	float: table;
 }
