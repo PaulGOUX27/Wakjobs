@@ -1,0 +1,30 @@
+{
+  "name": "wakfujobs",
+  "version": "1.0.0",
+  "description": "Calculator about craft on [Wakfu](https://www.wakfu.com/fr/mmorpg).\r Created with pure html/css/js + jquery.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node tests/index.js --experimental-modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PaulGOUX27/Wakjobs.git"
+  },
+  "keywords": [
+    "wakfu",
+    "craft",
+    "calculator"
+  ],
+  "author": "Paul Goux",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PaulGOUX27/Wakjobs/issues"
+  },
+  "homepage": "https://github.com/PaulGOUX27/Wakjobs#readme",
+  "devDependencies": {
+    "csv-parser": "^3.0.0"
+  }
+}

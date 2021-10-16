@@ -74,9 +74,7 @@ function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, pe
 	let currentLevel = nivDepart
 	let currentExperience = xpDepart
 	let craftDone = 0
-	console.log(recipeExperience)
 	let gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
-	console.log(gainedExperience)
 	while (craftDone < nbCraft) {
 		craftDone++;
 		currentExperience += gainedExperience;
