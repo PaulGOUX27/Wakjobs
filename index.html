@@ -45,7 +45,7 @@
 					<input type="checkbox" id="booster">
 					<br/>
 
-					<label for="weekend">100% Bonus weekend :</label>
+					<label for="weekend">25% Bonus week :</label>
 					<input type="checkbox" id="weekend">
 					<br/>
 
@@ -59,7 +59,7 @@
 				</div>
 			</div>
 			<div id="reverseCalculator" class="col-sm">
-				<div id="inputs">
+				<div id="reverse-inputs">
 					<label for="reverseStartLvl">Start level :</label>
 					<input type="number" id="reverseStartLvl" min="1" max="200" value="1" required="">
 					<br/>
@@ -88,7 +88,7 @@
 					<input type="checkbox" id="reverseBooster">
 					<br/>
 
-					<label for="reverseWeekend">100% Bonus weekend :</label>
+					<label for="reverseWeekend">25% Bonus week :</label>
 					<input type="checkbox" id="reverseWeekend">
 					<br/>
 
@@ -132,7 +132,7 @@
 	</div>
 	
 	<div class="centered">
-		<i>Recipe experience</i> can be found <a href="https://craftkfu.methodwakfu.com/">here</a>
+		<i>Recipe experience</i> can be found <a href="https://craftkfu.waklab.fr/">here</a>
 	</div>
 
 	<script>
@@ -154,6 +154,7 @@
 		function reverseCalculate() {reverseRecipeXp
 			let result
 			try {
+				console.log(Number($('#reverseRecipeXp').val()))
 				result = reverse(Number($('#reverseStartLvl').val()), Number($('#craftQuantity').val()), Number($('#reverseStartXp').val()), Number($('#reverseRecipeLvl').val()), Number($('#reverseRecipeXp').val()) / 1.5, Number($('#reversePercentage').val()), $('#reverseBooster').is(':checked'), $('#reverseWeekend').is(':checked'))
 				if(result.hasardCraft)
 					$('#reverseHasardCraft').text('This recipe is subject to the laws of randomness')
@@ -169,7 +170,7 @@
 
 
 	<footer>
-		WAKFU is an MMORPG published by Ankama. This tool is unofficial and has no connection with Ankama.<br/>
+		WAKFU is an MMORPG published by Ankama. This tool is unofficial and have no connection with Ankama.<br/>
 		Version 1.4
 	</footer>
 </body>

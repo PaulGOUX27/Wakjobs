@@ -35,7 +35,7 @@ function updateCoefficientCraft(niv) {
       case -19:
         return 0.024
       default:
-      	throw "Difference in level too great"
+      	throw "Difference in level too high"
     }
 }
 
@@ -45,7 +45,7 @@ function xpByCraft(currentLevel, recipeLevel, baseXpRecipe, percentage, booster,
 		baseXpRecipe *= 1.5
 	let gainedExperience = Math.floor(baseXpRecipe * coefficientCraft * (1 + (percentage / 100)))
 	if (weekend)
-		gainedExperience *= 2
+		gainedExperience *= 1.25
 	return gainedExperience
 }
 
@@ -55,7 +55,7 @@ function nbCraft(nivDepart, nivArrive, xpDepart, recipeLevel, recipeExperience, 
 	let currentLevel = nivDepart
 	let currentExperience = xpDepart
 	
-	gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
+	let gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
 
 	while (currentLevel < nivArrive) {
 		nbCraft++;
@@ -73,9 +73,10 @@ function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, pe
 	hasardCraft = false
 	let currentLevel = nivDepart
 	let currentExperience = xpDepart
-	let coefficientCraft = updateCoefficientCraft(recipeLevel - currentLevel)
 	let craftDone = 0
-	gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
+	console.log(recipeExperience)
+	let gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
+	console.log(gainedExperience)
 	while (craftDone < nbCraft) {
 		craftDone++;
 		currentExperience += gainedExperience;
@@ -86,4 +87,8 @@ function reverse(nivDepart, nbCraft, xpDepart, recipeLevel, recipeExperience, pe
 		gainedExperience = xpByCraft(currentLevel, recipeLevel, recipeExperience, percentage, booster, weekend)
 	}
 	return {"level": currentLevel, "experience": currentExperience, "hasardCraft" : hasardCraft }
+}
+
+module.exports = {
+	xpByCraft, nbCraft, reverse
 }
